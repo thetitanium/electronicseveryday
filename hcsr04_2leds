@@ -1,0 +1,47 @@
+/*
+ HC-SR04 Ultrasonic Distance Sensor
+ CODED BY: Nitish Dash [nitishdash95@gmail.com]
+ More info at: http://eweekend.blogspot.com
+ */
+
+#define trig 13
+#define echo 12
+#define red 11
+#define green 10
+
+void setup() {
+  Serial.begin (9600);
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);
+  pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+}
+
+void loop() {
+  long time, dist;
+  digitalWrite(trig, LOW); 
+  delayMicroseconds(2); 
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10); 
+  digitalWrite(trig, LOW);
+  time = pulseIn(echo, HIGH);
+  dist = ((time/2) / 29.1); //measure in cms
+  if (dist < 12) //change this to set proximity distance 
+  
+{  
+    digitalWrite(red,HIGH); 
+  digitalWrite(green,LOW);
+}
+  else {
+    digitalWrite(red,LOW);
+    digitalWrite(green,HIGH);
+  }
+  if (dist >= 200 || dist <= 0){
+    Serial.println("Out of range");
+  }
+  else {
+    Serial.print(dist);
+    Serial.println(" cm");
+  }
+  delay(400);
+}
