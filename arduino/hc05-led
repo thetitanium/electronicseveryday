@@ -1,0 +1,41 @@
+/* 
+ * ON PUBLIC DOMAIN
+ * Author         : Nitish Dash
+ * Name           : LED control with HC-04 and android
+ * Created        : 1/10/2015
+ * Webpage        : http://goo.gl/u2d0Cv
+ * Author Email   : nitishdash95@gmail.com
+ * Author Website : http://www.nitishdash.com/
+ **** DONOT COPY AND PLAGIARATE WITHOUT THE AUTHOR'S PERMISSIONS ****
+ */
+
+#include <SoftwareSerial.h>
+SoftwareSerial electro(10, 11); // RX, TX
+int l1=8; 
+int flag=0;
+String bdata="";
+char c=' ';
+
+void setup()
+{
+  electro.begin(9600);
+  pinMode(l1, OUTPUT);
+}
+void loop()
+{
+  while (electro.available()){
+    c=electro.read();
+    bdata+=c;
+if (bdata=="on")
+    {
+      flag=1;
+    }
+    if (bdata=="off")
+    {
+      flag=0;
+    }  
+}
+  digitalWrite(l1, flag);
+  delay(500);
+  bdata="";
+}
